@@ -1,0 +1,1155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Assignment4</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-02-26">
+<meta name="DC.source" content="Assignment4.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">QUESTION 1.Compute norm 2 distance from the mean of first 100 images in the corresponding class</a>
+</li>
+<li>
+<a href="#2">QUESTION 2: Compute norm 2 distance for the first 100 images for each 10 classes with the overall digit mean</a>
+</li>
+<li>
+<a href="#3">QUESTION: 3 To find the 20 nearest neigbours for norm 2 distance b/w first 100 classes and their corresponding means for all digits</a>
+</li>
+<li>
+<a href="#4">QUESTION 4: Compute norm 1 distance for first 100 images and their respective mean</a>
+</li>
+<li>
+<a href="#5">QUESTION 5: Find 20 nearest neighbours for norm 1 distance between first 100 images &amp; their corresponding means for each digit</a>
+</li>
+</ul>
+</div>
+<h2 id="1">QUESTION 1.Compute norm 2 distance from the mean of first 100 images in the corresponding class</h2>
+<p>find the least, average &amp; largest distance from the average image Load the dataset to the matplab workspace</p>
+<pre class="codeinput">load(<span class="string">"usps_all.mat"</span>);
+<span class="comment">% Initialize arrays for storing sample mean, first 100 instances, and their distances for each digit</span>
+sample_mean_digits = zeros(256, 10);
+first_100_instances = data(:, 1:100, :);
+distances_to_mean = zeros(100, 10);
+
+<span class="comment">% Iterate over all the digits to compute sample mean for each digit</span>
+<span class="keyword">for</span> digit = 1:10
+    digit_data = data(:, :, digit);
+    digit_size = size(digit_data);
+    mean_vector = sum(digit_data, 2) / digit_size(2);
+    mean_vector = uint8(mean_vector);
+    sample_mean_digits(:, digit) = mean_vector;
+<span class="keyword">end</span>
+
+<span class="comment">% Calculate L2 distance between first 100 instances and sample mean of each digit</span>
+<span class="keyword">for</span> digit = 1:10
+    <span class="keyword">for</span> instance = 1:100
+        distances_to_mean(instance, digit) = norm(double(sample_mean_digits(:, digit)) - double(first_100_instances(:, instance, digit)), 2);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Print Least, Mean, and Largest L2 distance for each digit</span>
+<span class="keyword">for</span> digit = 1:10
+    disp([<span class="string">'Least L-2 distance for '</span>, num2str(digit), <span class="string">' digit: '</span>, num2str(min(distances_to_mean(:, digit)))]);
+    disp([<span class="string">'Mean L-2 distance for '</span>, num2str(digit), <span class="string">' digit: '</span>, num2str(mean(distances_to_mean(:, digit)))]);
+    disp([<span class="string">'Largest L-2 distance for '</span>, num2str(digit), <span class="string">' digit: '</span>, num2str(max(distances_to_mean(:, digit)))]);
+    fprintf(<span class="string">'\n'</span>)
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">Least L-2 distance for 1 digit: 644.9806
+Mean L-2 distance for 1 digit: 1033.1475
+Largest L-2 distance for 1 digit: 2289.4895
+
+Least L-2 distance for 2 digit: 1040.3547
+Mean L-2 distance for 2 digit: 1353.6612
+Largest L-2 distance for 2 digit: 1729.5167
+
+Least L-2 distance for 3 digit: 985.2345
+Mean L-2 distance for 3 digit: 1237.3408
+Largest L-2 distance for 3 digit: 1645.2836
+
+Least L-2 distance for 4 digit: 878.0643
+Mean L-2 distance for 4 digit: 1251.5936
+Largest L-2 distance for 4 digit: 1673.825
+
+Least L-2 distance for 5 digit: 979.1287
+Mean L-2 distance for 5 digit: 1243.1603
+Largest L-2 distance for 5 digit: 1813.1991
+
+Least L-2 distance for 6 digit: 986.4725
+Mean L-2 distance for 6 digit: 1331.8424
+Largest L-2 distance for 6 digit: 1825.5859
+
+Least L-2 distance for 7 digit: 884.8717
+Mean L-2 distance for 7 digit: 1149.4806
+Largest L-2 distance for 7 digit: 1598.7214
+
+Least L-2 distance for 8 digit: 1020.2853
+Mean L-2 distance for 8 digit: 1287.1757
+Largest L-2 distance for 8 digit: 1921.9677
+
+Least L-2 distance for 9 digit: 923.5286
+Mean L-2 distance for 9 digit: 1253.8748
+Largest L-2 distance for 9 digit: 1697.2914
+
+Least L-2 distance for 10 digit: 959.3117
+Mean L-2 distance for 10 digit: 1299.2863
+Largest L-2 distance for 10 digit: 1884.4333
+
+</pre>
+<h2 id="2">QUESTION 2: Compute norm 2 distance for the first 100 images for each 10 classes with the overall digit mean</h2>
+<pre class="codeinput">
+<span class="comment">% Initialize array</span>
+distances_to_overall_mean = zeros(100, 10);
+mean_vector_size = size(sample_mean_digits);
+overall_mean = sum(sample_mean_digits, 2) / mean_vector_size(2);
+
+<span class="comment">% Calculate L2 distance between first 100 instances and overall sample mean of each digit</span>
+<span class="keyword">for</span> digit = 1:10
+    <span class="keyword">for</span> instance = 1:100
+        distances_to_overall_mean(instance, digit) = norm(double(overall_mean(:, 1)) - double(first_100_instances(:, instance, digit)), 2);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Print Least, Mean, and Largest L2 distance for each digit</span>
+<span class="keyword">for</span> digit = 1:10
+    disp([<span class="string">'Least L-2 distance for '</span>, num2str(digit), <span class="string">' digit: '</span>, num2str(min(distances_to_overall_mean(:, digit)))]);
+    disp([<span class="string">'Mean L-2 distance for '</span>, num2str(digit), <span class="string">' digit: '</span>, num2str(mean(distances_to_overall_mean(:, digit)))]);
+    disp([<span class="string">'Largest L-2 distance for '</span>, num2str(digit), <span class="string">' digit: '</span>, num2str(max(distances_to_overall_mean(:, digit)))]);
+    fprintf(<span class="string">'\n'</span>)
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">Least L-2 distance for 1 digit: 1081.5054
+Mean L-2 distance for 1 digit: 1375.9687
+Largest L-2 distance for 1 digit: 2164.2281
+
+Least L-2 distance for 2 digit: 1023.9378
+Mean L-2 distance for 2 digit: 1447.9844
+Largest L-2 distance for 2 digit: 1794.8408
+
+Least L-2 distance for 3 digit: 1075.006
+Mean L-2 distance for 3 digit: 1374.791
+Largest L-2 distance for 3 digit: 1705.5388
+
+Least L-2 distance for 4 digit: 1090.5447
+Mean L-2 distance for 4 digit: 1382.5326
+Largest L-2 distance for 4 digit: 1697.1208
+
+Least L-2 distance for 5 digit: 1068.3067
+Mean L-2 distance for 5 digit: 1354.4729
+Largest L-2 distance for 5 digit: 1771.8649
+
+Least L-2 distance for 6 digit: 1168.6411
+Mean L-2 distance for 6 digit: 1508.7324
+Largest L-2 distance for 6 digit: 1921.9848
+
+Least L-2 distance for 7 digit: 1029.7909
+Mean L-2 distance for 7 digit: 1323.765
+Largest L-2 distance for 7 digit: 1628.9693
+
+Least L-2 distance for 8 digit: 1065.5384
+Mean L-2 distance for 8 digit: 1372.8142
+Largest L-2 distance for 8 digit: 1902.0869
+
+Least L-2 distance for 9 digit: 1054.82
+Mean L-2 distance for 9 digit: 1378.9763
+Largest L-2 distance for 9 digit: 1762.3132
+
+Least L-2 distance for 10 digit: 1170.06
+Mean L-2 distance for 10 digit: 1557.2216
+Largest L-2 distance for 10 digit: 1911.8131
+
+</pre>
+<h2 id="3">QUESTION: 3 To find the 20 nearest neigbours for norm 2 distance b/w first 100 classes and their corresponding means for all digits</h2>
+<pre class="codeinput">load(<span class="string">'usps_all.mat'</span>);
+num_neighbors = 20; <span class="comment">% number of nearest neighbors</span>
+<span class="comment">% Iterate over all the digit classes (0-9)</span>
+<span class="keyword">for</span> digit = 1:10
+    <span class="comment">% Extract the matrix of images for the current digit</span>
+    digit_images = data(:,:,digit);
+    <span class="comment">% Calculate the size of the digit_images matrix</span>
+    num_images = size(digit_images, 2);
+    <span class="comment">% Compute the sample mean (average) for the current digit</span>
+    digit_mean = double(sum(digit_images, 2) / num_images);
+    <span class="comment">% Select the first 100 images for the current digit</span>
+    first_hundred_images = double(data(:, 1:100, digit));
+    <span class="comment">% Compute the L2 distances between the mean and the first 100 images</span>
+    l2_distances = sqrt(sum(((digit_mean - first_hundred_images).^2)));
+    <span class="comment">% Use sort() to find the indices of the 20 nearest neighbors</span>
+    [~, neighbor_indices] = sort(l2_distances, <span class="string">'ascend'</span>);
+    neighbor_indices = neighbor_indices(1: num_neighbors + 1); <span class="comment">% Choose 20 + 1 neighbors</span>
+    <span class="comment">% Remove the index of the mean itself</span>
+    <span class="keyword">if</span> neighbor_indices(1) == 1
+        neighbor_indices = neighbor_indices(2:end);
+    <span class="keyword">end</span>
+    fprintf(<span class="string">'Class %d Nearest Neighbors Distances:\n'</span>, digit);
+    <span class="comment">% Print the distances of the nearest neighbors</span>
+    <span class="keyword">for</span> j = 1:num_neighbors
+        fprintf(<span class="string">'%.4f\n'</span>, (neighbor_indices(j)));
+    <span class="keyword">end</span>
+    fprintf(<span class="string">'\n'</span>);
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">Class 1 Nearest Neighbors Distances:
+50.0000
+41.0000
+96.0000
+33.0000
+30.0000
+11.0000
+17.0000
+88.0000
+87.0000
+89.0000
+14.0000
+6.0000
+100.0000
+53.0000
+48.0000
+47.0000
+80.0000
+32.0000
+65.0000
+73.0000
+
+Class 2 Nearest Neighbors Distances:
+96.0000
+37.0000
+82.0000
+55.0000
+66.0000
+54.0000
+14.0000
+60.0000
+73.0000
+44.0000
+65.0000
+78.0000
+3.0000
+8.0000
+22.0000
+59.0000
+33.0000
+32.0000
+98.0000
+90.0000
+
+Class 3 Nearest Neighbors Distances:
+100.0000
+60.0000
+16.0000
+36.0000
+26.0000
+99.0000
+39.0000
+61.0000
+23.0000
+6.0000
+15.0000
+90.0000
+35.0000
+81.0000
+64.0000
+10.0000
+43.0000
+46.0000
+8.0000
+65.0000
+
+Class 4 Nearest Neighbors Distances:
+46.0000
+34.0000
+95.0000
+72.0000
+32.0000
+45.0000
+5.0000
+91.0000
+78.0000
+68.0000
+7.0000
+49.0000
+76.0000
+82.0000
+64.0000
+25.0000
+19.0000
+58.0000
+29.0000
+60.0000
+
+Class 5 Nearest Neighbors Distances:
+40.0000
+37.0000
+95.0000
+46.0000
+58.0000
+28.0000
+71.0000
+57.0000
+63.0000
+47.0000
+62.0000
+74.0000
+67.0000
+27.0000
+84.0000
+44.0000
+8.0000
+93.0000
+17.0000
+31.0000
+
+Class 6 Nearest Neighbors Distances:
+23.0000
+4.0000
+80.0000
+24.0000
+84.0000
+88.0000
+60.0000
+47.0000
+63.0000
+54.0000
+25.0000
+92.0000
+40.0000
+58.0000
+38.0000
+71.0000
+72.0000
+6.0000
+22.0000
+33.0000
+
+Class 7 Nearest Neighbors Distances:
+84.0000
+51.0000
+12.0000
+39.0000
+20.0000
+67.0000
+35.0000
+69.0000
+6.0000
+34.0000
+64.0000
+22.0000
+66.0000
+86.0000
+50.0000
+40.0000
+65.0000
+95.0000
+49.0000
+87.0000
+
+Class 8 Nearest Neighbors Distances:
+76.0000
+94.0000
+2.0000
+27.0000
+34.0000
+75.0000
+41.0000
+22.0000
+56.0000
+52.0000
+85.0000
+97.0000
+72.0000
+3.0000
+84.0000
+8.0000
+93.0000
+90.0000
+19.0000
+28.0000
+
+Class 9 Nearest Neighbors Distances:
+49.0000
+48.0000
+22.0000
+23.0000
+21.0000
+63.0000
+12.0000
+17.0000
+90.0000
+89.0000
+10.0000
+59.0000
+56.0000
+64.0000
+98.0000
+11.0000
+13.0000
+99.0000
+94.0000
+53.0000
+
+Class 10 Nearest Neighbors Distances:
+18.0000
+91.0000
+81.0000
+15.0000
+35.0000
+62.0000
+73.0000
+90.0000
+19.0000
+11.0000
+8.0000
+37.0000
+31.0000
+46.0000
+99.0000
+27.0000
+32.0000
+12.0000
+61.0000
+84.0000
+
+</pre>
+<h2 id="4">QUESTION 4: Compute norm 1 distance for first 100 images and their respective mean</h2>
+<p>Initialize array for storing L1 distances between first 100 instances and their respective means for each digit</p>
+<pre class="codeinput">distances_L1 = zeros(100, 10);
+
+<span class="comment">% Calculate L1 distance between first 100 instances and sample mean of each digit</span>
+<span class="keyword">for</span> digit = 1:10
+    <span class="keyword">for</span> instance = 1:100
+        distances_L1(instance, digit) = norm(double(sample_mean_digits(:, digit)) - double(first_100_instances(:, instance, digit)), 1);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Print Least, Mean, and Largest L1 distance for each digit</span>
+<span class="keyword">for</span> digit = 1:10
+    disp([<span class="string">'Least L-1 distance for '</span>, num2str(digit), <span class="string">' digit: '</span>, num2str(min(distances_L1(:, digit)))]);
+    disp([<span class="string">'Mean L-1 distance for '</span>, num2str(digit), <span class="string">' digit: '</span>, num2str(mean(distances_L1(:, digit)))]);
+    disp([<span class="string">'Largest L-1 distance for '</span>, num2str(digit), <span class="string">' digit: '</span>, num2str(max(distances_L1(:, digit)))]);
+    fprintf(<span class="string">'\n'</span>);
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">Least L-1 distance for 1 digit: 8190
+Mean L-1 distance for 1 digit: 12188.37
+Largest L-1 distance for 1 digit: 29834
+
+Least L-1 distance for 2 digit: 13154
+Mean L-1 distance for 2 digit: 17308.81
+Largest L-1 distance for 2 digit: 22488
+
+Least L-1 distance for 3 digit: 12168
+Mean L-1 distance for 3 digit: 15146
+Largest L-1 distance for 3 digit: 20502
+
+Least L-1 distance for 4 digit: 11181
+Mean L-1 distance for 4 digit: 15159.67
+Largest L-1 distance for 4 digit: 20890
+
+Least L-1 distance for 5 digit: 12071
+Mean L-1 distance for 5 digit: 15106.19
+Largest L-1 distance for 5 digit: 22749
+
+Least L-1 distance for 6 digit: 12432
+Mean L-1 distance for 6 digit: 16711.73
+Largest L-1 distance for 6 digit: 23668
+
+Least L-1 distance for 7 digit: 10418
+Mean L-1 distance for 7 digit: 13172.73
+Largest L-1 distance for 7 digit: 18948
+
+Least L-1 distance for 8 digit: 13244
+Mean L-1 distance for 8 digit: 16528.61
+Largest L-1 distance for 8 digit: 25588
+
+Least L-1 distance for 9 digit: 11859
+Mean L-1 distance for 9 digit: 15610.09
+Largest L-1 distance for 9 digit: 21286
+
+Least L-1 distance for 10 digit: 11987
+Mean L-1 distance for 10 digit: 16116.46
+Largest L-1 distance for 10 digit: 24515
+
+</pre>
+<h2 id="5">QUESTION 5: Find 20 nearest neighbours for norm 1 distance between first 100 images &amp; their corresponding means for each digit</h2>
+<pre class="codeinput">
+<span class="comment">% Set the value for k to retrieve the top 20 datapoints</span>
+k_value = 20;
+
+<span class="comment">% Initialize arrays for storing sorted distances and indices</span>
+sorted_distances_L1 = zeros(100, 10);
+sorted_indices_L1 = zeros(100, 10);
+
+<span class="comment">% Initialize arrays for storing top k distances and indices</span>
+top_k_distances_L1 = zeros(k_value, 10);
+top_k_indices_L1 = zeros(k_value, 10);
+
+<span class="comment">% Sort and retrieve top k distances and indices for norm-1 distance</span>
+<span class="keyword">for</span> digit = 1:10
+    [sorted_distances_L1(:, digit), sorted_indices_L1(:, digit)] = sort(distances_L1(:, digit), <span class="string">'ascend'</span>);
+    top_k_indices_L1(:, digit) = sorted_indices_L1(1:k_value, digit);
+    top_k_distances_L1(:, digit) = sorted_distances_L1(1:k_value, digit);
+<span class="keyword">end</span>
+
+<span class="comment">% Compare top k indices between norm-1 and norm-2 distances</span>
+<span class="keyword">for</span> digit = 1:10
+    disp([<span class="string">'Digit '</span>, num2str(digit), <span class="string">': '</span>])
+    disp(top_k_indices_L1(:, digit))
+    disp(top_k_indices(:, digit))
+    difference_set = setdiff(top_k_indices_L1(:, digit), top_k_indices(:, digit));
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">Digit 1: 
+    50
+    33
+    41
+    96
+    30
+    11
+    17
+    88
+    87
+    89
+    14
+     6
+    48
+    32
+    80
+    53
+   100
+    65
+    47
+    73
+
+    50
+    41
+    96
+    33
+    30
+    11
+    17
+    88
+    87
+    89
+    14
+     6
+   100
+    53
+    48
+    47
+    80
+    32
+    65
+    73
+
+Digit 2: 
+    96
+    37
+    82
+    55
+    60
+    54
+    66
+    14
+     3
+    44
+    73
+    65
+    78
+     8
+    59
+    98
+    33
+    32
+    22
+    21
+
+    96
+    37
+    82
+    55
+    66
+    54
+    14
+    60
+    73
+    44
+    65
+    78
+     3
+     8
+    22
+    59
+    33
+    32
+    98
+    90
+
+Digit 3: 
+    36
+   100
+    26
+    16
+    60
+    99
+    15
+    61
+    90
+     6
+    23
+    39
+    35
+    43
+    81
+    10
+    78
+     8
+    64
+    65
+
+   100
+    60
+    16
+    36
+    26
+    99
+    39
+    61
+    23
+    15
+     6
+    90
+    35
+    81
+    64
+    10
+    43
+    46
+    65
+     8
+
+Digit 4: 
+    46
+    34
+    95
+    72
+    45
+    32
+    91
+     5
+    78
+    49
+    68
+    82
+    64
+    76
+    51
+     7
+    26
+    60
+    29
+    19
+
+    46
+    34
+    95
+    72
+    32
+    45
+     5
+    91
+    78
+    68
+     7
+    49
+    76
+    82
+    64
+    25
+    19
+    58
+    29
+    60
+
+Digit 5: 
+    37
+    40
+    58
+    28
+    63
+    74
+    84
+    71
+    95
+    27
+    67
+    46
+    93
+    57
+     2
+    17
+    97
+    47
+    41
+    79
+
+    40
+    37
+    95
+    46
+    58
+    28
+    71
+    57
+    63
+    47
+    62
+    74
+    67
+    27
+    84
+    44
+     8
+    93
+    17
+    31
+
+Digit 6: 
+    23
+     4
+    80
+    84
+    60
+    24
+    88
+    47
+    54
+    25
+    92
+    63
+     2
+     6
+    71
+    58
+    38
+    72
+    40
+    33
+
+    23
+     4
+    80
+    24
+    84
+    88
+    60
+    47
+    63
+    54
+    25
+    92
+    40
+    58
+    38
+    72
+    71
+     6
+    22
+    33
+
+Digit 7: 
+    84
+    51
+    12
+    39
+    67
+    35
+    20
+    22
+    69
+    34
+     6
+    66
+    87
+    64
+    65
+    95
+     1
+    50
+    15
+    80
+
+    84
+    51
+    12
+    39
+    20
+    67
+    35
+    69
+     6
+    34
+    64
+    22
+    66
+    86
+    50
+    65
+    40
+    95
+    49
+    87
+
+Digit 8: 
+    76
+    94
+    27
+    56
+     2
+    97
+    75
+    41
+    85
+    52
+     3
+    34
+    22
+    84
+    45
+    98
+    28
+    69
+    72
+    19
+
+    76
+    94
+     2
+    27
+    34
+    75
+    41
+    22
+    56
+    85
+    52
+    97
+    72
+     3
+    84
+     8
+    93
+    90
+    19
+    28
+
+Digit 9: 
+    49
+    48
+    22
+    23
+    21
+    12
+    89
+    63
+    17
+    10
+    90
+    59
+    13
+    53
+    99
+    56
+    98
+    64
+    78
+    31
+
+    49
+    48
+    22
+    23
+    21
+    63
+    12
+    17
+    89
+    90
+    10
+    59
+    56
+    64
+    98
+    11
+    13
+    99
+    53
+    94
+
+Digit 10: 
+    18
+    91
+    81
+    15
+    35
+    90
+    62
+    11
+    73
+    31
+    19
+     8
+    99
+    37
+    46
+    27
+    32
+    12
+    61
+    80
+
+    18
+    91
+    81
+    15
+    35
+    62
+    73
+    90
+    19
+    11
+     8
+    37
+    31
+    46
+    99
+    27
+    32
+    12
+    61
+    84
+
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% QUESTION 1.Compute  norm 2 distance from the mean of first 100 images in the corresponding class
+    % find the least, average & largest distance  from the average image
+% Load the dataset to the matplab workspace
+load("usps_all.mat");
+% Initialize arrays for storing sample mean, first 100 instances, and their distances for each digit
+sample_mean_digits = zeros(256, 10);
+first_100_instances = data(:, 1:100, :);
+distances_to_mean = zeros(100, 10);
+
+% Iterate over all the digits to compute sample mean for each digit
+for digit = 1:10
+    digit_data = data(:, :, digit);
+    digit_size = size(digit_data);
+    mean_vector = sum(digit_data, 2) / digit_size(2);
+    mean_vector = uint8(mean_vector);
+    sample_mean_digits(:, digit) = mean_vector;
+end
+
+% Calculate L2 distance between first 100 instances and sample mean of each digit
+for digit = 1:10
+    for instance = 1:100
+        distances_to_mean(instance, digit) = norm(double(sample_mean_digits(:, digit)) - double(first_100_instances(:, instance, digit)), 2);
+    end
+end
+
+% Print Least, Mean, and Largest L2 distance for each digit
+for digit = 1:10
+    disp(['Least L-2 distance for ', num2str(digit), ' digit: ', num2str(min(distances_to_mean(:, digit)))]);
+    disp(['Mean L-2 distance for ', num2str(digit), ' digit: ', num2str(mean(distances_to_mean(:, digit)))]);
+    disp(['Largest L-2 distance for ', num2str(digit), ' digit: ', num2str(max(distances_to_mean(:, digit)))]);
+    fprintf('\n')
+end
+%% QUESTION 2: Compute  norm 2 distance for the first 100 images for each 10 classes with the overall digit mean
+
+% Initialize array
+distances_to_overall_mean = zeros(100, 10);
+mean_vector_size = size(sample_mean_digits);
+overall_mean = sum(sample_mean_digits, 2) / mean_vector_size(2);
+
+% Calculate L2 distance between first 100 instances and overall sample mean of each digit
+for digit = 1:10
+    for instance = 1:100
+        distances_to_overall_mean(instance, digit) = norm(double(overall_mean(:, 1)) - double(first_100_instances(:, instance, digit)), 2);
+    end
+end
+
+% Print Least, Mean, and Largest L2 distance for each digit
+for digit = 1:10
+    disp(['Least L-2 distance for ', num2str(digit), ' digit: ', num2str(min(distances_to_overall_mean(:, digit)))]);
+    disp(['Mean L-2 distance for ', num2str(digit), ' digit: ', num2str(mean(distances_to_overall_mean(:, digit)))]);
+    disp(['Largest L-2 distance for ', num2str(digit), ' digit: ', num2str(max(distances_to_overall_mean(:, digit)))]);
+    fprintf('\n')
+end
+
+%% QUESTION: 3  To find the 20 nearest neigbours for norm 2 distance b/w first 100 classes and their corresponding means for all digits
+
+
+load('usps_all.mat');
+num_neighbors = 20; % number of nearest neighbors
+% Iterate over all the digit classes (0-9)
+for digit = 1:10
+    % Extract the matrix of images for the current digit
+    digit_images = data(:,:,digit);
+    % Calculate the size of the digit_images matrix
+    num_images = size(digit_images, 2);
+    % Compute the sample mean (average) for the current digit
+    digit_mean = double(sum(digit_images, 2) / num_images);
+    % Select the first 100 images for the current digit
+    first_hundred_images = double(data(:, 1:100, digit));
+    % Compute the L2 distances between the mean and the first 100 images
+    l2_distances = sqrt(sum(((digit_mean - first_hundred_images).^2)));
+    % Use sort() to find the indices of the 20 nearest neighbors
+    [~, neighbor_indices] = sort(l2_distances, 'ascend');
+    neighbor_indices = neighbor_indices(1: num_neighbors + 1); % Choose 20 + 1 neighbors
+    % Remove the index of the mean itself
+    if neighbor_indices(1) == 1
+        neighbor_indices = neighbor_indices(2:end);
+    end
+    fprintf('Class %d Nearest Neighbors Distances:\n', digit);
+    % Print the distances of the nearest neighbors
+    for j = 1:num_neighbors
+        fprintf('%.4f\n', (neighbor_indices(j)));
+    end
+    fprintf('\n');
+end
+
+%% QUESTION 4: Compute norm 1 distance for first 100 images and their respective mean
+% Initialize array for storing L1 distances between first 100 instances and their respective means for each digit
+distances_L1 = zeros(100, 10);
+
+% Calculate L1 distance between first 100 instances and sample mean of each digit
+for digit = 1:10
+    for instance = 1:100
+        distances_L1(instance, digit) = norm(double(sample_mean_digits(:, digit)) - double(first_100_instances(:, instance, digit)), 1);
+    end
+end
+
+% Print Least, Mean, and Largest L1 distance for each digit
+for digit = 1:10
+    disp(['Least L-1 distance for ', num2str(digit), ' digit: ', num2str(min(distances_L1(:, digit)))]);
+    disp(['Mean L-1 distance for ', num2str(digit), ' digit: ', num2str(mean(distances_L1(:, digit)))]);
+    disp(['Largest L-1 distance for ', num2str(digit), ' digit: ', num2str(max(distances_L1(:, digit)))]);
+    fprintf('\n');
+end
+
+%% QUESTION 5: Find 20 nearest neighbours for norm 1 distance between first 100 images & their corresponding means for each digit
+
+% Set the value for k to retrieve the top 20 datapoints
+k_value = 20;
+
+% Initialize arrays for storing sorted distances and indices
+sorted_distances_L1 = zeros(100, 10);
+sorted_indices_L1 = zeros(100, 10);
+
+% Initialize arrays for storing top k distances and indices
+top_k_distances_L1 = zeros(k_value, 10);
+top_k_indices_L1 = zeros(k_value, 10);
+
+% Sort and retrieve top k distances and indices for norm-1 distance
+for digit = 1:10
+    [sorted_distances_L1(:, digit), sorted_indices_L1(:, digit)] = sort(distances_L1(:, digit), 'ascend');
+    top_k_indices_L1(:, digit) = sorted_indices_L1(1:k_value, digit);
+    top_k_distances_L1(:, digit) = sorted_distances_L1(1:k_value, digit);
+end
+
+% Compare top k indices between norm-1 and norm-2 distances
+for digit = 1:10
+    disp(['Digit ', num2str(digit), ': '])
+    disp(top_k_indices_L1(:, digit))
+    disp(top_k_indices(:, digit))
+    difference_set = setdiff(top_k_indices_L1(:, digit), top_k_indices(:, digit));
+end
+
+
+
+
+
+  
+
+##### SOURCE END #####
+-->
+</body>
+</html>

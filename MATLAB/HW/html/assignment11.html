@@ -1,0 +1,352 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>assignment11</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-05-03">
+<meta name="DC.source" content="assignment11.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#1">QUESTION 1:</a>
+</li>
+<li>
+<a href="#3">QUESTION 2: Experimental result and explanation</a>
+</li>
+<li>
+<a href="#4">Theroritical explanation</a>
+</li>
+</ul>
+</div>
+<h2 id="1">QUESTION 1:</h2>
+<pre class="codeinput">
+<span class="comment">% Load the USPS handwritten dataset</span>
+load(<span class="string">'usps_all.mat'</span>)
+
+<span class="comment">% Initialize cell arrays to store training and testing data for each digit</span>
+all_training = cell(1, 10);
+all_testing = cell(1, 10);
+
+<span class="comment">% Initialize arrays to store training and testing labels</span>
+labels_concat_training = [];
+labels_concat_testing = [];
+
+<span class="comment">% Loop through each digit from 1 to 10</span>
+<span class="keyword">for</span> i = 1:10
+    <span class="comment">% Select 880 samples for training</span>
+    training = data(:, 1:880, i);
+    <span class="comment">% Select 220 samples for testing</span>
+    testing = data(:, 881:1100, i);
+
+    <span class="comment">% Store training and testing data in respective cell arrays</span>
+    all_training{i} = training;
+    all_testing{i} = testing;
+
+    <span class="comment">% Create training labels by repeating the digit 'i' 880 times</span>
+    train_labels = repmat(i, 1, 880);
+    labels_concat_training = [labels_concat_training, train_labels];
+
+    <span class="comment">% Create testing labels by repeating the digit 'i' 220 times</span>
+    testing_labels = repmat(i, 1, 220);
+    labels_concat_testing = [labels_concat_testing, testing_labels];
+<span class="keyword">end</span>
+
+<span class="comment">% Concatenate the training and testing data across digits</span>
+concat_training = cat(2, all_training{:});
+concat_testing = cat(2, all_testing{:});
+
+<span class="comment">% Transpose the label arrays to match the data dimensions</span>
+labels_concat_training = transpose(labels_concat_training);
+labels_concat_testing = transpose(labels_concat_testing);
+
+<span class="comment">% Convert the data to double precision and transpose it</span>
+concat_training = transpose(double(concat_training));
+concat_testing = transpose(double(concat_testing));
+
+<span class="comment">% Perform Kernel PCA on the training data with a Gaussian kernel</span>
+kpca = KernelPca(concat_training, <span class="string">'gaussian'</span>, <span class="string">'gamma'</span>, 1/256^2, <span class="string">'Autoscale'</span>, true);
+
+<span class="comment">% Define the number of components to keep</span>
+num_comp = 80;
+
+<span class="comment">% Project the training data onto the kernel PCA space</span>
+projected_Xtrain = project(kpca, concat_training, num_comp);
+
+<span class="comment">% Project the testing data onto the kernel PCA space</span>
+projected_Xtest = project(kpca, concat_testing, num_comp);
+
+<span class="comment">% Train a k-nearest neighbors (kNN) classifier with k=20 using the</span>
+<span class="comment">% projected training data</span>
+knn = fitcknn(projected_Xtrain, labels_concat_training, <span class="string">'NumNeighbors'</span>, 20, <span class="string">'Distance'</span>, <span class="string">'euclidean'</span>);
+
+<span class="comment">% Predict the labels for the projected testing data using the kNN</span>
+<span class="comment">% classifier</span>
+predictions = predict(knn, projected_Xtest);
+
+<span class="comment">% Calculate the accuracy of the predictions</span>
+accuracy = sum(predictions == labels_concat_testing) / numel(labels_concat_testing);
+
+<span class="comment">% Display the accuracy of the model on the test set</span>
+disp([<span class="string">'Accuracy for test set: '</span>, num2str(accuracy)])
+</pre>
+<pre class="codeoutput">Accuracy for test set: 0.94364
+</pre>
+<p>REASON FOR THE CHOICE OF RBF KERNAL The Radial Basis Function (RBF) kernel, also known as the Gaussian kernel, is a popular choice in machine learning, especially for support vector machines and kernel PCA. In the USPS handwritten dataset, the RBF kernel is a good choice because it can effectively capture the complex structures and patterns in the image data, leading to a high accuracy of 94.318%. The RBF kernel allows us to model non-linear decision boundaries, which can be crucial when dealing with complex datasets like images. RBF kernel often results in good performance, as it can handle a wide variety of data structures. The gamma parameter was set to 1/256^2, which is a common choice when dealing with image data, as it roughly corresponds to the inverse of the number of pixels in an image.The RBF kernel's parameter, gamma, which controls the flexibility of the decision boundary. A small gamma value defines a large similarity radius which results in more points being grouped together. For a large gamma value, the points need to be very close to each other in order to be considered similar. This allows us to control the complexity of the model. This choice of gamma ensures that the kernel is sensitive to the differences between different handwritten digits, allowing for accurate classification.</p>
+<h2 id="3">QUESTION 2: Experimental result and explanation</h2>
+<p>Yes, it is possible to significantly lower the dimensionality of the data using Kernel PCA with the RBF kernel. The experiment that I carried out by varying the number of principal components and observing the resulting accuracy of the kNN classifier turns out to be a good way to test this.</p>
+<p>From my findings, it appears that even when the number of principal components is reduced to 20, the accuracy remains relatively high at 93.273%. This suggests that a significant amount of dimensionality reduction is possible without a substantial loss in classification accuracy. ie, the experimental results includes</p>
+<p>Number of Principal Components --&gt; Accuracy</p>
+<pre>   80	        --&gt;                        94.364% 85</pre>
+<pre>   94.318% 50	--&gt;                        94.182% 20</pre>
+<pre>   93.273% 5	    --&gt;                        74.500%</pre>
+<p>However, when the number of principal components is further reduced to 5, the accuracy drops to 74.5%. This indicates that while dimensionality reduction is possible, there is a limit to how much the dimensionality can be reduced before the loss of information starts to significantly impact the performance of the classifier.</p>
+<p>That is experiment demonstrates that Kernel PCA with the RBF kernel can effectively reduce the dimensionality of the USPS handwritten dataset while maintaining a high classification accuracy, up to a certain point. Beyond this point, the reduction in dimensionality starts to negatively impact the classifier&rsquo;s performance. This underscores the importance of choosing an appropriate number of principal components when performing Kernel PCA.</p>
+<h2 id="4">Theroritical explanation</h2>
+<p>The way in which Kernel PCA with the RBF kernel transforms the data: The RBF kernel implicitly maps the original data points into a higher-dimensional space, where nonlinear relationships among data points are better captured. This higher-dimensional space is infinite-dimensional, but the Kernel PCA algorithm effectively deals with it through eigenvalue decomposition. Principal Component Analysis in the Transformed Space: In the transformed space, Kernel PCA computes principal components that maximize variance. However, because of the nonlinear mapping induced by the RBF kernel, these principal components can capture nonlinear relationships among the data points more effectively compared to linear PCA.</p>
+<p>By choosing an appropriate value for the kernel parameter σ , Kernel PCA can effectively concentrate variance along a few principal components, leading to significant dimensionality reduction. The RBF kernel allows for flexible representation of the data, enabling Kernel PCA to capture complex structures with fewer dimensions.</p>
+<p>In the transformed space, data points that belong to different classes or clusters may become more separable, as the RBF kernel tends to pull similar points closer together and push dissimilar points farther apart.</p>
+<p>Despite the implicit mapping to a higher-dimensional space, Kernel PCA can still be computationally efficient due to the kernel trick, which avoids the explicit computation of the feature vectors in the higher-dimensional space. Therefore, theoretically, using Kernel PCA with the RBF kernel provides a powerful tool for significant dimensionality reduction by effectively capturing nonlinear relationships in the data and mapping it to a higher-dimensional space where these relationships are more separable.</p>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%% QUESTION 1:
+
+% Load the USPS handwritten dataset
+load('usps_all.mat')
+
+% Initialize cell arrays to store training and testing data for each digit
+all_training = cell(1, 10);
+all_testing = cell(1, 10);
+
+% Initialize arrays to store training and testing labels
+labels_concat_training = [];
+labels_concat_testing = [];
+
+% Loop through each digit from 1 to 10
+for i = 1:10
+    % Select 880 samples for training
+    training = data(:, 1:880, i);
+    % Select 220 samples for testing
+    testing = data(:, 881:1100, i);
+
+    % Store training and testing data in respective cell arrays
+    all_training{i} = training;
+    all_testing{i} = testing;
+
+    % Create training labels by repeating the digit 'i' 880 times
+    train_labels = repmat(i, 1, 880);
+    labels_concat_training = [labels_concat_training, train_labels];
+
+    % Create testing labels by repeating the digit 'i' 220 times
+    testing_labels = repmat(i, 1, 220);
+    labels_concat_testing = [labels_concat_testing, testing_labels];
+end
+
+% Concatenate the training and testing data across digits
+concat_training = cat(2, all_training{:});
+concat_testing = cat(2, all_testing{:});
+
+% Transpose the label arrays to match the data dimensions
+labels_concat_training = transpose(labels_concat_training);
+labels_concat_testing = transpose(labels_concat_testing);
+
+% Convert the data to double precision and transpose it
+concat_training = transpose(double(concat_training));
+concat_testing = transpose(double(concat_testing));
+
+% Perform Kernel PCA on the training data with a Gaussian kernel
+kpca = KernelPca(concat_training, 'gaussian', 'gamma', 1/256^2, 'Autoscale', true);
+
+% Define the number of components to keep
+num_comp = 80;
+
+% Project the training data onto the kernel PCA space
+projected_Xtrain = project(kpca, concat_training, num_comp);
+
+% Project the testing data onto the kernel PCA space
+projected_Xtest = project(kpca, concat_testing, num_comp);
+
+% Train a k-nearest neighbors (kNN) classifier with k=20 using the
+% projected training data
+knn = fitcknn(projected_Xtrain, labels_concat_training, 'NumNeighbors', 20, 'Distance', 'euclidean');
+
+% Predict the labels for the projected testing data using the kNN
+% classifier
+predictions = predict(knn, projected_Xtest);
+
+% Calculate the accuracy of the predictions
+accuracy = sum(predictions == labels_concat_testing) / numel(labels_concat_testing);
+
+% Display the accuracy of the model on the test set
+disp(['Accuracy for test set: ', num2str(accuracy)])
+%%
+% REASON FOR THE CHOICE OF RBF KERNAL The Radial Basis Function (RBF)
+% kernel, also known as the Gaussian kernel, is a popular choice in machine
+% learning, especially for support vector machines and kernel PCA. In the
+% USPS handwritten dataset, the RBF kernel is a good choice because it can
+% effectively capture the complex structures and patterns in the image
+% data, leading to a high accuracy of 94.318%. The RBF kernel allows us to
+% model non-linear decision boundaries, which can be crucial when dealing
+% with complex datasets like images. RBF kernel often results in good
+% performance, as it can handle a wide variety of data structures. The
+% gamma parameter was set to 1/256^2, which is a common choice when dealing
+% with image data, as it roughly corresponds to the inverse of the number
+% of pixels in an image.The RBF kernel's parameter, gamma, which controls
+% the flexibility of the decision boundary. A small gamma value defines a
+% large similarity radius which results in more points being grouped
+% together. For a large gamma value, the points need to be very close to
+% each other in order to be considered similar. This allows us to control
+% the complexity of the model. This choice of gamma ensures that the kernel
+% is sensitive to the differences between different handwritten digits,
+% allowing for accurate classification.
+
+%% QUESTION 2: Experimental result and explanation
+% 
+% Yes, it is possible to significantly lower the dimensionality of the data
+% using Kernel PCA with the RBF kernel. The experiment that I carried out
+% by varying the number of principal components and observing the resulting
+% accuracy of the kNN classifier turns out to be a good way to test this.
+% 
+% From my findings, it appears that even when the number of principal
+% components is reduced to 20, the accuracy remains relatively high at
+% 93.273%. This suggests that a significant amount of dimensionality
+% reduction is possible without a substantial loss in classification
+% accuracy. ie, the experimental results includes
+%
+% Number of Principal
+% Components	    REPLACE_WITH_DASH_DASH>                         Accuracy
+%
+%     80	        REPLACE_WITH_DASH_DASH>                        94.364% 85
+%
+%     94.318% 50	REPLACE_WITH_DASH_DASH>                        94.182% 20
+%
+%     93.273% 5	    REPLACE_WITH_DASH_DASH>                        74.500%
+%
+% However, when the number of principal components is further reduced to 5,
+% the accuracy drops to 74.5%. This indicates that while dimensionality
+% reduction is possible, there is a limit to how much the dimensionality
+% can be reduced before the loss of information starts to significantly
+% impact the performance of the classifier.
+% 
+% That is experiment demonstrates that Kernel PCA with the RBF kernel can
+% effectively reduce the dimensionality of the USPS handwritten dataset
+% while maintaining a high classification accuracy, up to a certain point.
+% Beyond this point, the reduction in dimensionality starts to negatively
+% impact the classifier’s performance. This underscores the importance of
+% choosing an appropriate number of principal components when performing
+% Kernel PCA.
+%% Theroritical explanation
+% The way in which Kernel PCA with the RBF kernel transforms the data:
+% The RBF kernel implicitly maps the
+% original data points into a higher-dimensional space, where nonlinear
+% relationships among data points are better captured. This
+% higher-dimensional space is infinite-dimensional, but the Kernel PCA
+% algorithm effectively deals with it through eigenvalue decomposition.
+% Principal Component Analysis in the Transformed Space: In the transformed
+% space, Kernel PCA computes principal components that maximize variance.
+% However, because of the nonlinear mapping induced by the RBF kernel,
+% these principal components can capture nonlinear relationships among the
+% data points more effectively compared to linear PCA. 
+% 
+% By choosing an appropriate value for the kernel
+% parameter σ , Kernel PCA can effectively concentrate variance along a
+% few principal components, leading to significant dimensionality
+% reduction. The RBF kernel allows for flexible representation of the data,
+% enabling Kernel PCA to capture complex structures with fewer dimensions.
+% 
+% In the transformed space, data points that belong to
+% different classes or clusters may become more separable, as the RBF
+% kernel tends to pull similar points closer together and push dissimilar
+% points farther apart. 
+% 
+% Despite the implicit mapping to a higher-dimensional space, Kernel PCA can still be
+% computationally efficient due to the kernel trick, which avoids the
+% explicit computation of the feature vectors in the higher-dimensional
+% space. Therefore, theoretically, using Kernel PCA with the RBF kernel
+% provides a powerful tool for significant dimensionality reduction by
+% effectively capturing nonlinear relationships in the data and mapping it
+% to a higher-dimensional space where these relationships are more
+% separable.
+% 
+
+##### SOURCE END #####
+-->
+</body>
+</html>

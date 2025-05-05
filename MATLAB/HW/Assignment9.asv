@@ -1,0 +1,163 @@
+% SOLUTION 1
+load("usps_all.mat");
+
+% Merge the resulting 2000 entries into a single matrix of size 256 × 2000 that will be used as the train set.
+usps_train_class1 = double(data(:,1:1000,3)')./255;
+usps_train_class2 = double(data(:,1:1000,8)')./255;
+
+% Merge the train set images into a single matrix
+%Extract the remaining 100 images for each class
+usps_test_class1 = double(data(:,1001:1100,3)')./255;
+usps_test_class2 = double(data(:,1001:1100,8)')./255;
+
+
+% Handpick ten pixels that are least relevant for classifying the data
+% Here we choose the first ten pixels, assuming they are on the edge of the image and thus contain less information for classification
+% You should adjust this based on your own analysis
+least_relevant_pixels = 1:10;
+
+% Remove the least relevant pixels from the training and testing data
+% Remove the least relevant pixels from the training and testing data
+usps_train_class1(:, least_relevant_pixels) = [];
+usps_train_class2(:, least_relevant_pixels) = [];
+usps_test_class1(:, least_relevant_pixels) = [];
+usps_test_class2(:, least_relevant_pixels) = [];
+
+
+% Concatenate
+usps_train = cat(1, usps_train_class1, usps_train_class2)';
+usps_test = cat(1, usps_test_class1, usps_test_class2)';
+
+% Set the number of samples
+samples_count = 1100;
+class1_labels = zeros(samples_count, 1);
+class2_labels = ones(samples_count, 1);
+
+% Concatenate training and test labels
+train_labels = cat(1, class1_labels(1:1000), class2_labels(1:1000));
+test_labels = cat(1, class1_labels(1001:end), class2_labels(1001:end));
+
+% Fit a Soft SVM model to the data
+% 'Standardize' is set to true to standardize the predictors
+% 'KernelFunction' is set to 'linear' to use a linear kernel function
+% 'KernelScale' is set to 'auto' to automatically scale the predictors
+% 'BoxConstraint' is set to 1 for a soft-margin SVM
+svm_model = fitcsvm(usps_train', train_labels, 'Standardize',true,'KernelFunction','linear','KernelScale','auto','BoxConstraint', 1);
+svm_model = fitPosterior(svm_model, usps_train',train_labels);
+[labels, posterior] = predict(svm_model, usps_test');
+% Count the number of mislabeled points
+mislabeled = sum(labels ~= test_labels);
+disp(['Mislabeled Points: ', num2str(mislabeled)]);
+% Calculate accuracy
+accuracy = sum(labels == test_labels) / length(test_labels) * 100;
+disp(['Accuracy: ', num2str(accuracy), '%']);
+
+%% SOLUTION 3
+% Load the USPS dataset
+load("usps_all.mat");
+
+% Normalize the data by dividing by 255 and split it into training and testing sets for two classes
+% The first 1000 entries of each class are used for training
+usps_train_class1 = double(data(:,1:1000,3)')./255;
+usps_train_class2 = double(data(:,1:1000,8)')./255;
+
+% The next 100 entries of each class are used for testing
+usps_test_class1 = double(data(:,1001:1100,3)')./255;
+usps_test_class2 = double(data(:,1001:1100,8)')./255;
+
+% Concatenate the training data from both classes
+usps_train = cat(1, usps_train_class1, usps_train_class2)';
+% Concatenate the testing data from both classes
+usps_test = cat(1, usps_test_class1, usps_test_class2)';
+
+% Handpick fifty pixels that are most relevant for classifying the data
+% Here we choose the 50 pixels in the center of the image, assuming they contain the most information for classification
+most_relevant_pixels = 104:153;
+
+% Keep only the most relevant pixels in the training and testing data
+usps_train = usps_train(most_relevant_pixels, :);
+usps_test = usps_test(most_relevant_pixels, :);
+
+% Set the number of samples
+samples_count = 1100;
+class1_labels = zeros(samples_count, 1);
+class2_labels = ones(samples_count, 1);
+
+% Concatenate training and test labels
+train_labels = cat(1, class1_labels(1:1000), class2_labels(1:1000));
+test_labels = cat(1, class1_labels(1001:end), class2_labels(1001:end));
+
+% Fit a Soft SVM model to the data
+% 'Standardize' is set to true to standardize the predictors
+% 'KernelFunction' is set to 'linear' to use a linear kernel function
+% 'KernelScale' is set to 'auto' to automatically scale the predictors
+% 'BoxConstraint' is set to 1 for a soft-margin SVM
+svm_model = fitcsvm(usps_train', train_labels, 'Standardize',true,'KernelFunction','linear','KernelScale','auto','BoxConstraint', 1);
+svm_model = fitPosterior(svm_model, usps_train',train_labels);
+[labels, posterior] = predict(svm_model, usps_test');
+% Count the number of mislabeled points
+mislabeled = sum(labels ~= test_labels);
+disp(['Mislabeled Points: ', num2str(mislabeled)]);
+% Calculate accuracy
+accuracy = sum(labels == test_labels) / length(test_labels) * 100;
+disp(['Accuracy: ', num2str(accuracy), '%']);
+
+%% EXPLANATION 3
+% The choice of pixels for classifying data can significantly impact the
+% performance of the model. At first it is logically viable to use the 
+% set of pixels based on a manual analysis. However, it is important to 
+% remember that the relevance of a pixel (or any feature in a machine learning task) 
+% is context-dependent. A pixel that is highly informative for one task might be less informative for another.
+% Therefore, it is always a good idea to perform some exploratory data analysis 
+% and feature selection process tailored to the specific task at hand.
+%       
+%       - Manual selection can be beneficial when we have a good understanding 
+% of the dataset and the problem at hand. It allows us to use our knowledge to
+%  determine the most informative pixels, and it’s easier to provide explanations
+%  for our choice of pixels. However, this method becomes less effective when
+%  there are more classes to classify, and it’s not very scalable.
+%  
+%       - Eventhough 50 most relevant pixels contain important information for classification, 
+% they don't capture all the information needed to achieve the highest accuracy.
+% The less relevant pixels, while individually not as informative, here collectively 
+% contribute valuable information for classification.
+% 
+% In terms of manual selection versus PCA, these results suggest that manual selection
+% can be effective if you have a strong understanding of which features are most relevant.
+% However, it also shows that this approach can miss important information contained 
+% in other features. 
+% 
+% On the other hand, PCA or other dimensionality reduction techniques can help ensure 
+% that the most informative combination of features is used, potentially leading to better performance.
+% 
+% Pros and cons of manually selecting pixels versus employing an algorithm
+% like PCA
+%    Manual selection: 
+%       - Pros: If we have a good understanding of the dataset and the problem at hand, 
+%               we would be able to make educated guess about the features ie, pixels that are most relevant. 
+%               It’s a straightforward method that doesn’t require any additional computational resources.
+%               Moreover, One advantage of selecting pixels by hand is that we may utilize our visual perception
+%               of the photos to pinpoint the locations of the most informative ones. This makes it simpler to 
+%               justify our selections of pixels.  
+%       - Cons: In terms of scalability, as the dimensiion of thedata increases, manually selecting features becomes
+%               increasingly impractical. For instance, here we chose the classes 3 and 8 and selected the most
+%               relevant pixels from the center of the images. But if we
+%               want to choose all the classes from 0 to 9, it becomes complicated.
+%                
+%     PCA: 
+%       - Pros: PCA can help to reduce the dimensionality of data
+%               while retaining the most important information. The USPS dataset, 
+%               which consists of 16x16 grayscale images of digits. Each image is a data point in a 
+%               256-dimensional space (since 16x16=256), with each dimension corresponding to a pixel in the image. 
+%               However, not all of these dimensions are equally informative, and many of them are correlated.
+%               For example, if we know the value of pixel (i, j), this can give us information about the value of pixel (i+1, j), 
+%               since adjacent pixels in an image are often similar.
+%               Here's where PCA comes in. PCA transforms the original 256 dimensions into a new set of 256 dimensions, 
+%                  called principal components.
+%         
+
+%                
+%      
+%               
+%
+%                       

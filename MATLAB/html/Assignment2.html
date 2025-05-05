@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Assignment2</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-02-10">
+<meta name="DC.source" content="Assignment2.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">QUESTION 1: PLOT 2 X 5 IMAGE GRID OF IMAGES</a>
+</li>
+<li>
+<a href="#3">QUESTION 2: PLOT THE SAMPLE MEAN FOR ALL DIGITS IN THE 2X5 GRID</a>
+</li>
+<li>
+<a href="#4">QUESTION 3: PLOT THE SAMPLE MEAN FOR ALL 10 FULL(1100 SAMPLES) SETS</a>
+</li>
+<li>
+<a href="#5">QUESTION 4: SAMPLE COVARIENCE MATRICES FOR EACH OF THE 10 SETS OF 1100 DIGIT EXAMPLES</a>
+</li>
+<li>
+<a href="#6">QUESTION 5: PLOT OF THE 120TH CENTRAL PIXEL's MARGINAL DISTRIBUTION FOR EACH 10 DIT CLASSES USING 2X5 IMAGE GRID</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">
+<span class="comment">% To load USPS Handwritten Digits dataset</span>
+load(<span class="string">"USPS_all.mat"</span>);
+</pre>
+<h2 id="2">QUESTION 1: PLOT 2 X 5 IMAGE GRID OF IMAGES</h2>
+<pre class="codeinput">
+<span class="comment">% Inorder to view the data,first open a figure</span>
+figure;
+<span class="comment">% For loop to iterate over all the digits to plot in 2x5 grid</span>
+<span class="keyword">for</span> i = 1:10
+    subplot(2,5,i);
+    x = data(:,i,i);
+    imshow(reshape(x,[16 16]));
+<span class="keyword">end</span>
+</pre>
+<img vspace="5" hspace="5" src="Assignment2_01.png" alt=""> <h2 id="3">QUESTION 2: PLOT THE SAMPLE MEAN FOR ALL DIGITS IN THE 2X5 GRID</h2>
+<p>open figure to view data</p>
+<pre class="codeinput">figure;
+<span class="comment">% Array to store the samples means for digits from 1 to 9 and 0</span>
+sample_means = zeros(256, 10);
+<span class="comment">%</span>
+<span class="keyword">for</span> i = 1:10
+    subplot(2,5,i);
+    data_digit = data(:,:,i);
+    xsize = size(data_digit);
+    data_mean = sum(data_digit,2)/xsize(2);
+    data_mean = uint8(data_mean);
+    sample_means(:, i) = data_mean;
+    imshow(reshape(data_mean,[16 16]));
+<span class="keyword">end</span>
+</pre>
+<img vspace="5" hspace="5" src="Assignment2_02.png" alt=""> <h2 id="4">QUESTION 3: PLOT THE SAMPLE MEAN FOR ALL 10 FULL(1100 SAMPLES) SETS</h2>
+<p>--&gt; AVERAGE OF THE HANDWRITTEN DIGITS --&gt; RESHAPE AS 16X16 &amp; INCLUDE THIS OVERALL AVG MEAN Initialize figure</p>
+<pre class="codeinput">figure;
+sample_means_size = size(sample_means);
+<span class="comment">% -&gt; Compute the sample mean for the current digit</span>
+total_sample_mean = sum(sample_means,2)/sample_means_size(2);
+total_sample_mean = uint8(total_sample_mean);
+imshow(reshape(total_sample_mean,[16 16]));
+</pre>
+<img vspace="5" hspace="5" src="Assignment2_03.png" alt=""> <h2 id="5">QUESTION 4: SAMPLE COVARIENCE MATRICES FOR EACH OF THE 10 SETS OF 1100 DIGIT EXAMPLES</h2>
+<pre class="codeinput">figure;
+<span class="comment">% Here we define a 3D sample covarience matrix</span>
+d_array = zeros([256 256 10]);
+<span class="comment">% For each digit we calculate the sample covariance</span>
+<span class="keyword">for</span> i=1:sample_means_size(2)
+    <span class="keyword">for</span> j=1:xsize(2)
+        data_digit = data(:,:,i);
+        vector_difference = im2double(data_digit(:,j)) - sample_means(:, i);
+        outer_product = vector_difference*vector_difference.';
+        d_array(:,:,i) = d_array(:,:,i) + outer_product;
+    <span class="keyword">end</span>
+    d_array(:, :, i) = d_array(:, :, i)/(xsize(2) - 1);
+<span class="keyword">end</span>
+
+<span class="comment">% Plot each digit sample covarience in 2x5 grid</span>
+<span class="keyword">for</span> i=1:sample_means_size(2)
+    subplot(2,5,i);
+    imshow(reshape(uint8(d_array(:,:,i)),[256 256]));
+<span class="keyword">end</span>
+</pre>
+<img vspace="5" hspace="5" src="Assignment2_04.png" alt=""> <img vspace="5" hspace="5" src="Assignment2_05.png" alt=""> <h2 id="6">QUESTION 5: PLOT OF THE 120TH CENTRAL PIXEL's MARGINAL DISTRIBUTION FOR EACH 10 DIT CLASSES USING 2X5 IMAGE GRID</h2>
+<p>HERE WE GENERATE A MULTIVARIATE NORMAL DISTRIBUTION</p>
+<pre class="codeinput">
+<span class="comment">% Initialize a new figure</span>
+<span class="comment">% Define the number of samples</span>
+figure;
+no_samples = 10000;
+
+<span class="comment">% Initialize a 3D array to store the samples for each digit class</span>
+<span class="comment">% Initialize an array to store the samples of the 120th central pixel for each class</span>
+arr_samples = zeros([no_samples, 256, sample_means_size(2)]);
+distribution = zeros([no_samples, sample_means_size(2)]);
+
+<span class="comment">% Generate samples for each digit class</span>
+<span class="keyword">for</span> i = 1:sample_means_size(2)
+    <span class="comment">% Generate samples from a multivariate normal distribution using mvnrnd</span>
+    arr_samples(:, :, i) = mvnrnd(sample_means(:, i), d_array(:, :, i), no_samples);
+
+    <span class="comment">% Extract the values of the 120th central pixel from each sample</span>
+    distribution(:, i) = arr_samples(:, 120, i);
+<span class="keyword">end</span>
+
+<span class="comment">% Convert arrays to uint8 for histogram plotting</span>
+<span class="comment">% Define histogram edges</span>
+arr_samples = uint8(arr_samples);
+distribution = uint8(distribution);
+hist_edges = 0:5:255;
+
+<span class="comment">% Plot histograms for each digit class</span>
+<span class="keyword">for</span> i = 1:10
+    <span class="comment">% Create subplot for each digit class</span>
+    <span class="comment">% Plot histogram of marginal distribution of the 120th central pixel</span>
+    <span class="comment">% Set title, axis labels, and limits</span>
+    subplot(2, 5, i);
+    histogram(distribution(:, i), hist_edges, <span class="string">'Normalization'</span>, <span class="string">'probability'</span>);
+    title([<span class="string">'Digit '</span>, num2str(mod(i, 10))]);
+    xlabel(<span class="string">'Intensity'</span>);
+    ylabel(<span class="string">'Probability'</span>);
+    xlim([0 255]);
+<span class="keyword">end</span>
+</pre>
+<img vspace="5" hspace="5" src="Assignment2_06.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+
+% To load USPS Handwritten Digits dataset
+load("USPS_all.mat");
+%% QUESTION 1: PLOT 2 X 5 IMAGE GRID OF IMAGES
+
+% Inorder to view the data,first open a figure
+figure;
+% For loop to iterate over all the digits to plot in 2x5 grid
+for i = 1:10
+    subplot(2,5,i);
+    x = data(:,i,i);
+    imshow(reshape(x,[16 16]));
+end
+
+%% QUESTION 2: PLOT THE SAMPLE MEAN FOR ALL DIGITS IN THE 2X5 GRID
+% open figure to view data
+figure;
+% Array to store the samples means for digits from 1 to 9 and 0
+sample_means = zeros(256, 10);
+% 
+for i = 1:10
+    subplot(2,5,i);
+    data_digit = data(:,:,i);
+    xsize = size(data_digit);
+    data_mean = sum(data_digit,2)/xsize(2);
+    data_mean = uint8(data_mean);
+    sample_means(:, i) = data_mean;
+    imshow(reshape(data_mean,[16 16]));
+end
+
+
+%% QUESTION 3: PLOT THE SAMPLE MEAN FOR ALL 10 FULL(1100 SAMPLES) SETS
+% REPLACE_WITH_DASH_DASH> AVERAGE OF THE HANDWRITTEN DIGITS
+% REPLACE_WITH_DASH_DASH> RESHAPE AS 16X16 & INCLUDE THIS OVERALL AVG MEAN
+% Initialize figure
+figure;
+sample_means_size = size(sample_means);
+% -> Compute the sample mean for the current digit
+total_sample_mean = sum(sample_means,2)/sample_means_size(2);
+total_sample_mean = uint8(total_sample_mean);
+imshow(reshape(total_sample_mean,[16 16]));
+
+%% QUESTION 4: SAMPLE COVARIENCE MATRICES FOR EACH OF THE 10 SETS OF 1100 DIGIT EXAMPLES
+figure;
+% Here we define a 3D sample covarience matrix
+d_array = zeros([256 256 10]);
+% For each digit we calculate the sample covariance 
+for i=1:sample_means_size(2)
+    for j=1:xsize(2)
+        data_digit = data(:,:,i);
+        vector_difference = im2double(data_digit(:,j)) - sample_means(:, i);
+        outer_product = vector_difference*vector_difference.';
+        d_array(:,:,i) = d_array(:,:,i) + outer_product;
+    end
+    d_array(:, :, i) = d_array(:, :, i)/(xsize(2) - 1);
+end
+
+% Plot each digit sample covarience in 2x5 grid
+for i=1:sample_means_size(2)
+    subplot(2,5,i);
+    imshow(reshape(uint8(d_array(:,:,i)),[256 256]));
+end
+
+
+
+%% QUESTION 5: PLOT OF THE 120TH CENTRAL PIXEL's MARGINAL DISTRIBUTION FOR EACH 10 DIT CLASSES USING 2X5 IMAGE GRID
+% HERE WE GENERATE A MULTIVARIATE NORMAL DISTRIBUTION
+
+% Initialize a new figure
+% Define the number of samples
+figure;
+no_samples = 10000;
+
+% Initialize a 3D array to store the samples for each digit class
+% Initialize an array to store the samples of the 120th central pixel for each class
+arr_samples = zeros([no_samples, 256, sample_means_size(2)]);
+distribution = zeros([no_samples, sample_means_size(2)]);
+
+% Generate samples for each digit class
+for i = 1:sample_means_size(2)
+    % Generate samples from a multivariate normal distribution using mvnrnd
+    arr_samples(:, :, i) = mvnrnd(sample_means(:, i), d_array(:, :, i), no_samples);
+    
+    % Extract the values of the 120th central pixel from each sample
+    distribution(:, i) = arr_samples(:, 120, i);
+end
+
+% Convert arrays to uint8 for histogram plotting
+% Define histogram edges
+arr_samples = uint8(arr_samples);
+distribution = uint8(distribution);
+hist_edges = 0:5:255;
+
+% Plot histograms for each digit class
+for i = 1:10
+    % Create subplot for each digit class
+    % Plot histogram of marginal distribution of the 120th central pixel
+    % Set title, axis labels, and limits
+    subplot(2, 5, i);
+    histogram(distribution(:, i), hist_edges, 'Normalization', 'probability');
+    title(['Digit ', num2str(mod(i, 10))]);
+    xlabel('Intensity');
+    ylabel('Probability');
+    xlim([0 255]);
+end
+
+##### SOURCE END #####
+-->
+</body>
+</html>
